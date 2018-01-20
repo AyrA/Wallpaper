@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnChangeWP = new System.Windows.Forms.Button();
             this.nudTimeout = new System.Windows.Forms.NumericUpDown();
             this.tbDirectory = new System.Windows.Forms.TextBox();
@@ -131,6 +132,7 @@
             this.Controls.Add(this.tbDirectory);
             this.Controls.Add(this.nudTimeout);
             this.Controls.Add(this.btnChangeWP);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "frmMain";
             this.Text = "Wallpaper Changer";
