@@ -236,5 +236,41 @@ namespace Wallpaper
                 SaveSettings();
             }
         }
+
+        private void NFI_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            NFI.Visible = false;
+        }
+
+        private void frmMain_SizeChanged(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                NFI.Visible = true;
+            }
+        }
+
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void nextImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetRandomImage();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

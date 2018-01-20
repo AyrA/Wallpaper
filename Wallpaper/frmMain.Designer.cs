@@ -38,8 +38,13 @@
             this.lblInterval = new System.Windows.Forms.Label();
             this.FBD = new System.Windows.Forms.FolderBrowserDialog();
             this.NFI = new System.Windows.Forms.NotifyIcon(this.components);
+            this.CMS = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nextImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrent)).BeginInit();
+            this.CMS.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnChangeWP
@@ -128,9 +133,40 @@
             this.NFI.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.NFI.BalloonTipText = "Double click to open";
             this.NFI.BalloonTipTitle = "Wallpaper Changer";
+            this.NFI.ContextMenuStrip = this.CMS;
             this.NFI.Icon = ((System.Drawing.Icon)(resources.GetObject("NFI.Icon")));
-            this.NFI.Text = "notifyIcon1";
-            this.NFI.Visible = true;
+            this.NFI.Text = "Wallpaper Changer";
+            this.NFI.DoubleClick += new System.EventHandler(this.NFI_DoubleClick);
+            // 
+            // CMS
+            // 
+            this.CMS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.nextImageToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.CMS.Name = "CMS";
+            this.CMS.Size = new System.Drawing.Size(135, 70);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.showToolStripMenuItem.Text = "&Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // nextImageToolStripMenuItem
+            // 
+            this.nextImageToolStripMenuItem.Name = "nextImageToolStripMenuItem";
+            this.nextImageToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.nextImageToolStripMenuItem.Text = "&Next Image";
+            this.nextImageToolStripMenuItem.Click += new System.EventHandler(this.nextImageToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.exitToolStripMenuItem.Text = "&Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -147,8 +183,11 @@
             this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "frmMain";
             this.Text = "Wallpaper Changer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.SizeChanged += new System.EventHandler(this.frmMain_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrent)).EndInit();
+            this.CMS.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,6 +203,10 @@
         private System.Windows.Forms.Label lblInterval;
         private System.Windows.Forms.FolderBrowserDialog FBD;
         private System.Windows.Forms.NotifyIcon NFI;
+        private System.Windows.Forms.ContextMenuStrip CMS;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nextImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 
