@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnChangeWP = new System.Windows.Forms.Button();
             this.nudTimeout = new System.Windows.Forms.NumericUpDown();
@@ -36,6 +37,7 @@
             this.pbCurrent = new System.Windows.Forms.PictureBox();
             this.lblInterval = new System.Windows.Forms.Label();
             this.FBD = new System.Windows.Forms.FolderBrowserDialog();
+            this.NFI = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrent)).BeginInit();
             this.SuspendLayout();
@@ -121,6 +123,15 @@
             // 
             this.FBD.Description = "Select image Directory";
             // 
+            // NFI
+            // 
+            this.NFI.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.NFI.BalloonTipText = "Double click to open";
+            this.NFI.BalloonTipTitle = "Wallpaper Changer";
+            this.NFI.Icon = ((System.Drawing.Icon)(resources.GetObject("NFI.Icon")));
+            this.NFI.Text = "notifyIcon1";
+            this.NFI.Visible = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -152,6 +163,7 @@
         private System.Windows.Forms.PictureBox pbCurrent;
         private System.Windows.Forms.Label lblInterval;
         private System.Windows.Forms.FolderBrowserDialog FBD;
+        private System.Windows.Forms.NotifyIcon NFI;
     }
 }
 
