@@ -169,32 +169,35 @@ namespace Wallpaper
         /// </summary>
         private void SetRandomImage()
         {
-            if (Images == null || Images.Count == 0)
+            if (!string.IsNullOrEmpty(LastDir))
             {
-                try
+                if (Images == null || Images.Count == 0)
                 {
-                    GetImages(LastDir);
-                }
-                catch (Exception ex)
-                {
-                    ShowError(ex);
-                }
-            }
-            string ImageFile = PopRandom();
-            if (!string.IsNullOrEmpty(ImageFile))
-            {
-                if (File.Exists(ImageFile))
-                {
-                    DesktopWallpaper.Set(ImageFile, DesktopWallpaper.Style.Stretch);
-                    Image I = Image.FromFile(ImageFile);
-                    if (pbCurrent.Image != null)
+                    try
                     {
-                        pbCurrent.Image.Dispose();
+                        GetImages(LastDir);
                     }
-                    pbCurrent.Image = I;
+                    catch (Exception ex)
+                    {
+                        ShowError(ex);
+                    }
                 }
+                string ImageFile = PopRandom();
+                if (!string.IsNullOrEmpty(ImageFile))
+                {
+                    if (File.Exists(ImageFile))
+                    {
+                        DesktopWallpaper.Set(ImageFile, DesktopWallpaper.Style.Stretch);
+                        Image I = Image.FromFile(ImageFile);
+                        if (pbCurrent.Image != null)
+                        {
+                            pbCurrent.Image.Dispose();
+                        }
+                        pbCurrent.Image = I;
+                    }
+                }
+                SaveSettings();
             }
-            SaveSettings();
         }
 
         /// <summary>
