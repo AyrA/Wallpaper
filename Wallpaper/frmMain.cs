@@ -20,6 +20,7 @@ namespace Wallpaper
         /// <summary>
         /// Serializable settings
         /// </summary>
+        /// <remarks>Only public types can be serialized for some bizarre reason</remarks>
         public struct Settings
         {
             public string DirectoryName;
@@ -27,11 +28,15 @@ namespace Wallpaper
             public int Timeout;
         }
 
+        #region Vars
+
         private List<string> Images;
         private string LastDir;
         private Random R;
         private Timer T;
         private string SettingsFile;
+
+        #endregion
 
         /// <summary>
         /// Initializes form and processes settings
@@ -68,6 +73,8 @@ namespace Wallpaper
             SetRandomImage();
             T.Start();
         }
+
+        #region Logic
 
         /// <summary>
         /// Saves current settings
@@ -218,6 +225,10 @@ namespace Wallpaper
             ShowError(ex.Message);
         }
 
+        #endregion
+
+        #region Events
+
         private void btnChangeWP_Click(object sender, EventArgs e)
         {
             T.Stop();
@@ -275,5 +286,7 @@ namespace Wallpaper
         {
             Close();
         }
+
+        #endregion
     }
 }
