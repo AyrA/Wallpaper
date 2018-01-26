@@ -50,3 +50,13 @@ Fair random selection
 The wallpaper is randomly selected.
 The algorithm ensures that every image is shown once before reusing one that has already been shown in the past.
 This also works across restarts.
+
+Wallpaper List
+==============
+
+If you desperately need a few wallpapers to test, here are 12000:
+
+	magnet:?xt=urn:btih:vfjliq5qfx2jvh5h3yqr7tsfzoru24cy
+	magnet:?xt=urn:btih:A952B443B02DF49A9FA7DE211FCE45CBA34D7058
+
+The links are for the identical torrent. Need a client? [Check QuickTorrent](https://github.com/AyrA/QuickTorrent)
