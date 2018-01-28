@@ -19,33 +19,32 @@ namespace Wallpaper
     }
     public partial class frmMessages : Form
     {
-        private struct LogMessage
-        {
-            public string Message;
-            public MessageType Type;
-        }
-
-        private List<LogMessage> Messages;
-
         public frmMessages()
         {
             InitializeComponent();
-            Messages = new List<LogMessage>();
         }
 
         public void AddMessage(string Message, MessageType T)
         {
-            if (Enum.IsDefined(typeof(MessageType), T))
+            if (!string.IsNullOrEmpty(Message))
             {
-                tbMessages.AppendText(Message + "\n");
-                tbMessages.Select(tbMessages.Text.Length - Message.Length - 1, Message.Length);
-                tbMessages.SelectionColor = ColorFromType(T);
-                Messages.Add(new LogMessage() { Message = Message, Type = T });
-                SetImage(T);
+                if (Enum.IsDefined(typeof(MessageType), T))
+                {
+                    //Append Text
+                    tbMessages.AppendText(Message + "\n");
+                    //Set Color
+                    tbMessages.Select(tbMessages.Text.Length - Message.Length - 1, Message.Length);
+                    tbMessages.SelectionColor = ColorFromType(T);
+                    SetImage(T);
+                }
+                else
+                {
+                    AddMessage("Attempting to add unsupported message type", MessageType.Error);
+                }
             }
             else
             {
-                AddMessage("Attempting to add unsupported message type", MessageType.Error);
+                AddMessage("(null)", T);
             }
         }
 
