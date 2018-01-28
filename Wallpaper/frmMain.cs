@@ -57,7 +57,7 @@ namespace Wallpaper
             {
                 Images = new List<string>(Data.FileNames);
             }
-            if (Data.Timeout >= nudTimeout.Minimum && Data.Timeout<=nudTimeout.Maximum)
+            if (Data.Timeout >= nudTimeout.Minimum && Data.Timeout <= nudTimeout.Maximum)
             {
                 T.Interval = Data.Timeout * 1000;
                 nudTimeout.Value = Data.Timeout;
@@ -84,7 +84,9 @@ namespace Wallpaper
         /// </summary>
         private void SaveSettings()
         {
-            SaveSettings(new Settings() {
+            ShowDebug("Saving default settings");
+            SaveSettings(new Settings()
+            {
                 DirectoryName = LastDir,
                 FileNames = Images?.ToArray(),
                 Timeout = T.Interval / 1000
@@ -97,6 +99,7 @@ namespace Wallpaper
         /// <param name="S">Settings</param>
         private void SaveSettings(Settings S)
         {
+            ShowDebug("Writing settings to file");
             try
             {
                 File.WriteAllText(SettingsFile, S.Serialize());
@@ -113,6 +116,7 @@ namespace Wallpaper
         /// <returns>Settings</returns>
         private Settings ReadSettings()
         {
+            ShowDebug("Reading settings");
             if (File.Exists(SettingsFile))
             {
                 try
@@ -124,6 +128,7 @@ namespace Wallpaper
                     ShowError("Problem reading settings file.\r\n" + ex.Message);
                 }
             }
+            ShowDebug(SettingsFile + " doesn't exists. Returning defaults");
             return default(Settings);
         }
 
@@ -133,8 +138,10 @@ namespace Wallpaper
         /// <returns>Random item, null if list is empty or uninitialized</returns>
         private string PopRandom()
         {
+            ShowDebug("Getting random entry from image list");
             if (Images == null || Images.Count == 0)
             {
+                ShowInfo("Image list is empty.");
                 return null;
             }
             lock (Images)
@@ -163,6 +170,7 @@ namespace Wallpaper
         /// <param name="Folder">Directory to read images from</param>
         private void GetImages(string Folder)
         {
+            ShowDebug("Reloading Images");
             try
             {
                 Images = new List<string>(Directory.GetFiles(Folder).Where(m => IsImageFile(m)).Select(m => m.Substring(Folder.Length).Trim('/', '\\')));
@@ -170,7 +178,7 @@ namespace Wallpaper
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("Invalid Directory", ex);
+                throw new ArgumentException($"Unable to enumerate files in {Folder}", ex);
             }
         }
 
@@ -183,6 +191,7 @@ namespace Wallpaper
             {
                 if (Images == null || Images.Count == 0)
                 {
+                    ShowDebug("Populating empty image list");
                     try
                     {
                         GetImages(LastDir);
@@ -191,12 +200,18 @@ namespace Wallpaper
                     {
                         ShowError(ex);
                     }
+                    if (Images == null || Images.Count == 0)
+                    {
+                        ShowWarning("Directory doesn't contanins any images. Timer stopped");
+                        T.Stop();
+                    }
                 }
                 string ImageFile = PopRandom();
                 if (!string.IsNullOrEmpty(ImageFile))
                 {
                     if (File.Exists(ImageFile))
                     {
+                        ShowDebug("Image set");
                         try
                         {
                             DesktopWallpaper.Set(ImageFile, DesktopWallpaper.Style.Stretch);
@@ -206,17 +221,35 @@ namespace Wallpaper
                                 pbCurrent.Image.Dispose();
                             }
                             pbCurrent.Image = I;
+                            ShowDebug("Image set");
                         }
                         catch (Exception ex)
                         {
                             ShowError(ex);
                         }
                     }
+                    else
+                    {
+                        ShowInfo($"{ImageFile} from cache no longer exists");
+                    }
+                }
+                else
+                {
+                    ShowWarning("Couldn't get image from directory. Timer stopped");
+                    T.Stop();
                 }
                 SaveSettings();
             }
+            else
+            {
+                ShowDebug("Directory not yet selected, skipping wallpaper function");
+            }
         }
 
+        /// <summary>
+        /// Shows debug message
+        /// </summary>
+        /// <param name="Message">Message</param>
         private void ShowDebug(string Message)
         {
             Program.Debug(Message);
@@ -225,6 +258,10 @@ namespace Wallpaper
 #endif
         }
 
+        /// <summary>
+        /// Shows informational message
+        /// </summary>
+        /// <param name="Message">Message</param>
         private void ShowInfo(string Message)
         {
             if (!string.IsNullOrEmpty(Message))
@@ -233,6 +270,10 @@ namespace Wallpaper
             }
         }
 
+        /// <summary>
+        /// Shows warning message
+        /// </summary>
+        /// <param name="Message">Message</param>
         private void ShowWarning(string Message)
         {
             if (!string.IsNullOrEmpty(Message))
@@ -262,7 +303,7 @@ namespace Wallpaper
         /// <param name="ex">Exception</param>
         private void ShowError(Exception ex)
         {
-            ShowError(ex.Message);
+            ShowError($"Unhandled Exception: {ex.Message}\nLocation: {ex.StackTrace}");
         }
 
         #endregion
@@ -334,7 +375,7 @@ namespace Wallpaper
                 Logger.Show();
             }
         }
- 
+
         #endregion
-   }
+    }
 }
