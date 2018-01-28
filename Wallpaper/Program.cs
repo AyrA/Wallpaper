@@ -15,9 +15,11 @@ namespace Wallpaper
         [STAThread]
         static void Main()
         {
+            Debug("Application started");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
+            Debug("Application ended");
         }
 
         /// <summary>
