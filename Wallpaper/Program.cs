@@ -7,7 +7,7 @@ namespace Wallpaper
     public static class Program
     {
         [DllImport("kernel32.dll")]
-        private static extern void OutputDebugString([MarshalAs(UnmanagedType.LPStr)]string Message);
+        private static extern void OutputDebugString(string Message);
 
         /// <summary>
         /// The main entry point for the application.
