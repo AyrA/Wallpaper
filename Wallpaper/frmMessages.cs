@@ -11,10 +11,22 @@ using Wallpaper.Properties;
 
 namespace Wallpaper
 {
+    /// <summary>
+    /// Types of Log Messages
+    /// </summary>
     public enum MessageType
     {
+        /// <summary>
+        /// Informational
+        /// </summary>
         Info,
+        /// <summary>
+        /// Warning
+        /// </summary>
         Warning,
+        /// <summary>
+        /// Error
+        /// </summary>
         Error
     }
     public partial class frmMessages : Form
@@ -24,6 +36,11 @@ namespace Wallpaper
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Add a message to the log
+        /// </summary>
+        /// <param name="Message">Message</param>
+        /// <param name="T">Message Type</param>
         public void AddMessage(string Message, MessageType T)
         {
             if (!string.IsNullOrEmpty(Message))
@@ -48,6 +65,10 @@ namespace Wallpaper
             }
         }
 
+        /// <summary>
+        /// Set image according to the message type
+        /// </summary>
+        /// <param name="T">Type</param>
         private void SetImage(MessageType T)
         {
             Image I = null;
@@ -73,6 +94,12 @@ namespace Wallpaper
             }
         }
 
+        /// <summary>
+        /// Gets the color of a type
+        /// </summary>
+        /// <param name="T">Message Type</param>
+        /// <returns>Color</returns>
+        /// <remarks>Defaults to Black for unsupported types</remarks>
         private Color ColorFromType(MessageType T)
         {
             switch (T)
@@ -88,6 +115,11 @@ namespace Wallpaper
             }
         }
 
+        /// <summary>
+        /// Prevent user from closing with [X]
+        /// </summary>
+        /// <param name="sender">Form</param>
+        /// <param name="e">Close Event Arguments</param>
         private void frmMessages_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
