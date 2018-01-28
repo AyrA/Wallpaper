@@ -51,6 +51,13 @@ The wallpaper is randomly selected.
 The algorithm ensures that every image is shown once before reusing one that has already been shown in the past.
 This also works across restarts.
 
+Tray icon
+=========
+
+The application hides behind a tray icon if you minimize it,
+this keeps space available for other applications in the taskbar.
+The icon has a context menu to allow for a quick wallpaper swap.
+
 Wallpaper List
 ==============
 
