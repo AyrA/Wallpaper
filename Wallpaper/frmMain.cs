@@ -211,7 +211,7 @@ namespace Wallpaper
                 {
                     if (File.Exists(ImageFile))
                     {
-                        ShowDebug("Image set");
+                        ShowDebug("Setting image");
                         try
                         {
                             DesktopWallpaper.Set(ImageFile, DesktopWallpaper.Style.Stretch);
