@@ -35,6 +35,7 @@ namespace Wallpaper
         private Random R;
         private Timer T;
         private string SettingsFile;
+        private frmMessages Logger;
 
         #endregion
 
@@ -46,6 +47,7 @@ namespace Wallpaper
             InitializeComponent();
             R = new Random();
             T = new Timer();
+            Logger = new frmMessages();
             //Default
             T.Interval = 60000;
 
@@ -72,6 +74,7 @@ namespace Wallpaper
             };
             SetRandomImage();
             T.Start();
+            ShowDebug("Application started");
         }
 
         #region Logic
@@ -194,16 +197,48 @@ namespace Wallpaper
                 {
                     if (File.Exists(ImageFile))
                     {
-                        DesktopWallpaper.Set(ImageFile, DesktopWallpaper.Style.Stretch);
-                        Image I = Image.FromFile(ImageFile);
-                        if (pbCurrent.Image != null)
+                        try
                         {
-                            pbCurrent.Image.Dispose();
+                            DesktopWallpaper.Set(ImageFile, DesktopWallpaper.Style.Stretch);
+                            Image I = Image.FromFile(ImageFile);
+                            if (pbCurrent.Image != null)
+                            {
+                                pbCurrent.Image.Dispose();
+                            }
+                            pbCurrent.Image = I;
                         }
-                        pbCurrent.Image = I;
+                        catch (Exception ex)
+                        {
+                            ShowError(ex);
+                        }
                     }
                 }
                 SaveSettings();
+            }
+        }
+
+        private void ShowDebug(string Message)
+        {
+            Program.Debug(Message);
+#if DEBUG
+            ShowInfo(string.Format("DEBUG: {0}", Message));
+#endif
+        }
+
+        private void ShowInfo(string Message)
+        {
+            if (!string.IsNullOrEmpty(Message))
+            {
+                Logger.AddMessage(Message, MessageType.Info);
+            }
+        }
+
+        private void ShowWarning(string Message)
+        {
+            if (!string.IsNullOrEmpty(Message))
+            {
+                Logger.AddMessage(Message, MessageType.Warning);
+                Logger.Show();
             }
         }
 
@@ -213,7 +248,12 @@ namespace Wallpaper
         /// <param name="Message">Error message</param>
         private void ShowError(string Message)
         {
-            MessageBox.Show(Message, "Problem setting Wallpaper", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!string.IsNullOrEmpty(Message))
+            {
+                //MessageBox.Show(Program.Debug(Message), "Problem setting Wallpaper", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.AddMessage(Message, MessageType.Error);
+                Logger.Show();
+            }
         }
 
         /// <summary>
@@ -287,6 +327,14 @@ namespace Wallpaper
             Close();
         }
 
+        private void frmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F1)
+            {
+                Logger.Show();
+            }
+        }
+ 
         #endregion
-    }
+   }
 }

@@ -180,11 +180,13 @@
             this.Controls.Add(this.nudTimeout);
             this.Controls.Add(this.btnChangeWP);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "frmMain";
             this.Text = "Wallpaper Changer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.SizeChanged += new System.EventHandler(this.frmMain_SizeChanged);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.nudTimeout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbCurrent)).EndInit();
             this.CMS.ResumeLayout(false);
