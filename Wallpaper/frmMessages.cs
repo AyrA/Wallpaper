@@ -50,7 +50,8 @@ namespace Wallpaper
                     //Append Text
                     tbMessages.AppendText(Message + "\n");
                     //Set Color
-                    tbMessages.Select(tbMessages.Text.Length - Message.Length - 1, Message.Length);
+                    var Start = Math.Max(0, tbMessages.Text.Length - Message.Length - 1);
+                    tbMessages.Select(Start, Message.Length);
                     tbMessages.SelectionColor = ColorFromType(T);
                     SetImage(T);
                 }
